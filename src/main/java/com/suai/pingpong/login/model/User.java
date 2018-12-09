@@ -20,7 +20,7 @@ import java.util.Set;
 public class User {
 
     public User() {
-
+        // Do nothing because need empty constructor
     }
 
     @Id

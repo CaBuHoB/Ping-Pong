@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    private final String urlHTML = "registration.html";
+    private static final String URL_HTML = "registration.html";
 
     @Autowired
     private UserService userService;
@@ -35,7 +35,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName(urlHTML);
+        modelAndView.setViewName(URL_HTML);
         return modelAndView;
     }
 
@@ -55,12 +55,12 @@ public class LoginController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName(urlHTML);
+            modelAndView.setViewName(URL_HTML);
         } else {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName(urlHTML);
+            modelAndView.setViewName(URL_HTML);
         }
         return modelAndView;
     }
@@ -69,7 +69,7 @@ public class LoginController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userService.findUserByUsername(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("profile");
