@@ -1,23 +1,15 @@
 package com.suai.pingpong.game.model;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Map;
 import java.util.TreeMap;
 
+@Data
 public class ActiveWebSocketUser {
-    @Getter
-    @Setter
-    @NonNull
     private String owner;
-    @Setter
-    @Getter
-    @NonNull
     private String sessionId;
-    @Getter
-    private Map<String, String> username;
+    private final Map<String, String> username;
 
     public ActiveWebSocketUser(String owner, String sessionId) {
         this.sessionId = sessionId;

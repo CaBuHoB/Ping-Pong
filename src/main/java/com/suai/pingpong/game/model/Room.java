@@ -1,13 +1,9 @@
 package com.suai.pingpong.game.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 public class Room {
-    @Getter
-    @Setter
     private String owner;
-    @Getter
-    @Setter
     private int numberOfUsers = 1;
 }

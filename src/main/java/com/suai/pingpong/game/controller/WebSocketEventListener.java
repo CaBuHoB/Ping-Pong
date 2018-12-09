@@ -23,7 +23,6 @@ import java.util.TreeMap;
 @Component
 @Log4j2
 public class WebSocketEventListener {
-
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ActiveWebSocketUserRepository repository = ActiveWebSocketUserRepository.getActiveWebSocketUserRepository();
 
