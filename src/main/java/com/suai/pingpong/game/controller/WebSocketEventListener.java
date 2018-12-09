@@ -5,8 +5,7 @@ import com.suai.pingpong.game.model.ActiveWebSocketUser;
 import com.suai.pingpong.game.model.GameModel;
 import com.suai.pingpong.game.model.ModelRoom;
 import com.suai.pingpong.game.repository.ActiveWebSocketUserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.MessageHeaders;
@@ -22,9 +21,8 @@ import java.util.TreeMap;
 
 
 @Component
+@Log4j2
 public class WebSocketEventListener {
-
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ActiveWebSocketUserRepository repository = ActiveWebSocketUserRepository.getActiveWebSocketUserRepository();
@@ -36,7 +34,7 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
-        logger.info("Received a new web socket connection");
+        log.info("Received a new web socket connection");
     }
 
     @EventListener
@@ -58,7 +56,7 @@ public class WebSocketEventListener {
             activeWebSocketUser.setUsername(username, id);
         }
 
-        logger.info("Received a new web socket subscribe");
+        log.info("Received a new web socket subscribe");
     }
 
     @EventListener

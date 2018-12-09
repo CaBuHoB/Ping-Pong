@@ -1,24 +1,16 @@
 package com.suai.pingpong.game.repository;
 
 import com.suai.pingpong.game.model.ActiveWebSocketUser;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveWebSocketUserRepository {
-
+    @Getter
     private static final ActiveWebSocketUserRepository activeWebSocketUserRepository = new ActiveWebSocketUserRepository();
-
-    @SuppressWarnings("CanBeFinal")
+    @Getter
     private List<ActiveWebSocketUser> listActiveWebSocketUser = new ArrayList<>();
-
-    public static ActiveWebSocketUserRepository getActiveWebSocketUserRepository() {
-        return activeWebSocketUserRepository;
-    }
-
-    public List<ActiveWebSocketUser> getListActiveWebSocketUser(){
-        return listActiveWebSocketUser;
-    }
 
     public ActiveWebSocketUser findUserByUsername(String username){
         for(ActiveWebSocketUser user : listActiveWebSocketUser){

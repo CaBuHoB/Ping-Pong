@@ -1,48 +1,21 @@
 package com.suai.pingpong.game.model;
 
-@SuppressWarnings("ALL")
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
 public class GameModel {
+    @Getter
+    @Setter
     private String act;
+    @Getter
+    @Setter
     private String username;
+    @Getter
+    @Setter
     private int x;
+    @Getter
+    @Setter
     private int y;
-
-    public GameModel(String act, String username, int x, int y) {
-        this.act = act;
-        this.username = username;
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getAct() {
-        return act;
-    }
-
-    public void setAct(String act) {
-        this.act = act;
-    }
 }

@@ -40,7 +40,7 @@ public class RoomsController {
     @ResponseBody
     public List<Room> getRooms() {
         ModelRoom modelRoom = ModelRoom.getInstance();
-        return modelRoom.listRooms();
+        return modelRoom.getModelRoomList();
     }
 
     @PostMapping(value = "/rooms")
@@ -75,7 +75,7 @@ public class RoomsController {
             modelAndView.setViewName("wrongRoomName.html");
             return modelAndView;
         } else if (!owner.equals(user)) {
-            List<Room> rooms = modelRoom.listRooms();
+            List<Room> rooms = modelRoom.getModelRoomList();
             for (Room roomFromList : rooms) {
                 if (roomFromList.getOwner().equals(owner)) {
                     roomFromList.setNumberOfUsers(2);

@@ -1,27 +1,13 @@
 package com.suai.pingpong.game.model;
 
-@SuppressWarnings("ALL")
+import lombok.Getter;
+import lombok.Setter;
+
 public class Room {
+    @Getter
+    @Setter
     private String owner;
-    private int numberOfUsers;
-
-    public Room() {
-        numberOfUsers = 1;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public int getNumberOfUsers() {
-        return numberOfUsers;
-    }
-
-    public void setNumberOfUsers(int numberOfUsers) {
-        this.numberOfUsers = numberOfUsers;
-    }
+    @Getter
+    @Setter
+    private int numberOfUsers = 1;
 }

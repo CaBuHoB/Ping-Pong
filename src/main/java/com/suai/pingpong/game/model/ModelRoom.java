@@ -1,17 +1,17 @@
 package com.suai.pingpong.game.model;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class ModelRoom {
+    @Getter
     private static final ModelRoom instance = new ModelRoom();
+    @Getter
     private final List<Room> modelRoomList;
-
-    public static ModelRoom getInstance() {
-        return instance;
-    }
 
     private ModelRoom() {
         modelRoomList = new ArrayList<>();
@@ -25,10 +25,6 @@ public class ModelRoom {
         return modelRoomList.stream()
                 .map(Room::getOwner)
                 .collect(Collectors.toList());
-    }
-
-    public List<Room> listRooms() {
-        return modelRoomList;
     }
 
     public void deleteRoom(String owner) {
