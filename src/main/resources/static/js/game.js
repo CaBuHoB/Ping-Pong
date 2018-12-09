@@ -1,7 +1,7 @@
 var stompClient = null;
 var sock = null;
 
-function connect() {
+function connect(options) {
     sock = new SockJS('/ws');
     stompClient = Stomp.over(sock);
     stompClient.connect({}, function (frame) {

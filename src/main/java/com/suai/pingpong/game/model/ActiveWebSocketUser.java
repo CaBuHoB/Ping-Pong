@@ -1,44 +1,32 @@
 package com.suai.pingpong.game.model;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
 import java.util.Map;
 import java.util.TreeMap;
 
-@SuppressWarnings("unused")
 public class ActiveWebSocketUser {
-
+    @Getter
+    @Setter
+    @NonNull
     private String owner;
+    @Setter
+    @Getter
+    @NonNull
     private String sessionId;
-    @SuppressWarnings("CanBeFinal")
+    @Getter
     private Map<String, String> username;
 
-    public  ActiveWebSocketUser(String owner, String sessionId) {
+    public ActiveWebSocketUser(String owner, String sessionId) {
         this.sessionId = sessionId;
         this.owner = owner;
         this.username = new TreeMap<>();
         this.username.put(owner, sessionId);
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public Map<String, String>getUsername() {
-        return username;
-    }
-
     public void setUsername(String username, String sessionId) {
         this.username.put(username, sessionId);
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 }

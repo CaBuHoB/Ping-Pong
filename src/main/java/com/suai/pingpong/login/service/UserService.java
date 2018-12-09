@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service("userService")
 public class UserService {
 
@@ -20,8 +19,8 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository,
+    public UserService(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") UserRepository userRepository,
+                       @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
