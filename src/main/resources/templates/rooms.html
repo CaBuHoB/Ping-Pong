@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+    <script>
+        function updateRooms() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/rooms.js", true);
+            xhr.onload = function (en) {
+                var rooms = JSON.parse(xhr.responseText);
+                var roomsDiv = document.getElementById("rooms");
+                while (roomsDiv.firstChild) {
+                    roomsDiv.removeChild(roomsDiv.firstChild);
+                }
+                for (i = 0; i < rooms.length; i++){
+                    var p = document.createElement("p");
+                    var a = document.createElement("a");
+                    a.setAttribute("href", "/rooms/" + rooms[i].owner)
+                    a.innerHTML = rooms[i].owner;
+                    p.appendChild(a);
+                    roomsDiv.appendChild(p);
+                }
+            };
+            xhr.send();
+        }
+
+        setInterval(updateRooms, 2000);
+    </script>
+</head>
+<body>
+<div id="rooms"></div>
+
+<form action="#" th:action="@{/rooms}" th:object="${user}" method="post">
+    <button type="submit" class="btn btn-primary btn-block">Create room</button>
+</form>
+
+</body>
+</html>
