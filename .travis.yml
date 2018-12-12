@@ -7,4 +7,6 @@ services:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - sudo mvn clean package -Dmy.password=$DOCKER_PASS docker:build -s maven-settings.xml
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker build -t cabuhob/ping-pong .
+  - docker push cabuhob/ping-pong
