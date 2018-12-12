@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: users
+      MYSQL_USER: some_username
+      MYSQL_PASSWORD: some_password
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  ping-pong-web:
+    image: cabuhob/ping-pong
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/users
+      DB_PASSWORD: some_password
+      DB_USERNAME: some_username

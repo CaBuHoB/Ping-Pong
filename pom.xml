@@ -17,6 +17,9 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <my.username>cabuhob</my.username>
+        <my.password>private-password</my.password>
+        <my.email>cabuhob@gmail.com</my.email>
     </properties>
 
     <dependencies>
@@ -94,6 +97,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
 
             <!-- Heroku Maven Plugin Configuration -->
@@ -144,6 +150,25 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <dockerDirectory>${project.basedir}</dockerDirectory>
+                    <imageName>${my.username}/${project.artifactId}</imageName>
+                    <serverId>docker-hub</serverId>
+                    <pushImage>true</pushImage>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -157,6 +182,5 @@
             </snapshots>
         </repository>
     </repositories>
-
 
 </project>
