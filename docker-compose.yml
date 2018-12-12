@@ -16,7 +16,8 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
-  ping-pong-web:
+
+  web:
     image: cabuhob/ping-pong
     restart: always
     ports:

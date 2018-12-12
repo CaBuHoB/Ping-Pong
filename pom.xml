@@ -17,9 +17,6 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <my.username>cabuhob</my.username>
-        <my.password>private-password</my.password>
-        <my.email>cabuhob@gmail.com</my.email>
     </properties>
 
     <dependencies>
