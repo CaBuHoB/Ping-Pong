@@ -150,25 +150,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <dockerDirectory>${project.basedir}</dockerDirectory>
-                    <imageName>${my.username}/${project.artifactId}</imageName>
-                    <serverId>docker-hub</serverId>
-                    <pushImage>true</pushImage>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
