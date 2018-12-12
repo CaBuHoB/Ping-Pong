@@ -7,4 +7,4 @@ services:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - mvn clean package -Dmy.password=$DOCKER_PASS docker:build -s maven-settings.xml
+  - sudo mvn clean package -Dmy.password=$DOCKER_PASS docker:build -s maven-settings.xml
