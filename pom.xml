@@ -94,6 +94,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
 
             <!-- Heroku Maven Plugin Configuration -->
@@ -157,6 +160,5 @@
             </snapshots>
         </repository>
     </repositories>
-
 
 </project>
