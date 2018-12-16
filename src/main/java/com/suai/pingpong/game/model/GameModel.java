@@ -1,13 +1,20 @@
 package com.suai.pingpong.game.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
 public class GameModel {
     private String act;
     private String username;
-    private int x;
+    private boolean canStart;
     private int y;
+    private BallAndScores ballAndScores;
+
+    @Data
+    private class BallAndScores {
+        private int opponentScores;
+        private int playerScores;
+        private int x;
+        private int y;
+    }
 }

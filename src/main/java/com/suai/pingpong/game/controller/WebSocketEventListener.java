@@ -65,7 +65,9 @@ public class WebSocketEventListener {
         if (activeWebSocketUser != null) {
             String username = activeWebSocketUser.getOwner();
 
-            GameModel gameModel = new GameModel("close", username, 0, 0);
+            GameModel gameModel = new GameModel();
+            gameModel.setAct("close");
+            gameModel.setUsername(username);
             String jsonString = JSON.toJSONString(gameModel);
             simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + username, jsonString);
             repository.removeUser(activeWebSocketUser);
@@ -77,7 +79,9 @@ public class WebSocketEventListener {
                 for (String username : map.keySet()) {
                     if (map.get(username).equals(id)) {
                         map.replace(username, id);
-                        GameModel gameModel = new GameModel("erase", username, 0, 0);
+                        GameModel gameModel = new GameModel();
+                        gameModel.setAct("close");
+                        gameModel.setUsername(username);
                         String jsonString = JSON.toJSONString(gameModel);
                         simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + user.getOwner(), jsonString);
                         ModelRoom.setNumberOfUsers(user.getOwner(), 1);
