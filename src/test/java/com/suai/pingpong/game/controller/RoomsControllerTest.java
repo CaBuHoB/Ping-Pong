@@ -25,11 +25,10 @@ public class RoomsControllerTest {
 
     @Test
     public void sendCoordinate() {
-        GameModel coordinates = new GameModel(null, "test", 1, 1);
+        GameModel coordinates = new GameModel();
         GameModel coordinatesFromMethod = roomsController.sendCoordinate(coordinates);
         assertEquals(coordinates.getAct(), coordinatesFromMethod.getAct());
         assertEquals(coordinates.getUsername(), coordinatesFromMethod.getUsername());
-        assertEquals(coordinates.getX(), coordinatesFromMethod.getX());
         assertEquals(coordinates.getY(), coordinatesFromMethod.getY());
     }
 }

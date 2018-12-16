@@ -78,19 +78,25 @@ public class RoomsController {
             List<Room> rooms = modelRoom.getModelRoomList();
             for (Room roomFromList : rooms) {
                 if (roomFromList.getOwner().equals(owner)) {
+                    if (roomFromList.getNumberOfUsers() == 2) {
+                        // выдать ошибку о том, что комната уже заполнена
+                        modelAndView.setViewName("redirect:/rooms");
+                        return modelAndView;
+                    }
                     roomFromList.setNumberOfUsers(2);
                 }
             }
         }
 
         modelAndView.addObject("owner", owner);
+        modelAndView.addObject("username", user);
         modelAndView.setViewName("userRoom.html");
         return modelAndView;
     }
 
     @MessageMapping("/roomSocket/{owner}")
     @SendTo("/topic/roomSocket/{owner}")
-    public GameModel sendCoordinate(GameModel coordinates) {
+    GameModel sendCoordinate(GameModel coordinates) {
         return coordinates;
     }
 

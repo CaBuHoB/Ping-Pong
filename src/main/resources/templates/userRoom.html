@@ -3,41 +3,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Websocket</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script th:src="@{/js/game.js}"></script>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>StockInfo</th>
-                </tr>
-                </thead>
-                <tbody id="userinfo">
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+<span id="username" th:text="${username}" style="display: none"></span>
+
+<canvas id="pong"></canvas>
+
+<div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="readinessCheck">
+    <label class="custom-control-label" for="readinessCheck">Ready</label>
 </div>
+<div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="readinessOpponentCheck" disabled>
+    <label class="custom-control-label" for="readinessOpponentCheck">Opponet ready</label>
+</div>
+
+<script th:src="@{/js/game.js}"></script>
+
 </body>
 </html>
