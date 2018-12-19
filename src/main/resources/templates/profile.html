@@ -4,28 +4,38 @@
 
 <head>
     <title>Profile</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 </head>
 
 <body>
+
+<nav class="navbar navbar-light bg-faded">
+    <div class="nav navbar-nav">
+        <a class="navbar-brand m-b-0" href="#">Ping-Pong</a>
+        <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="/rooms">Rooms</a>
+        <a class="nav-item nav-link active" href="/profile">Profile</a>
+        <a class="nav-item nav-link" href="/logout">Sign out</a>
+    </div>
+</nav>
+
 <div class="container">
-
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout
-        </button>
-    </form>
-
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span th:utext="${userName}"></span>
-            </div>
-            <p><a href="/">Home</a></p>
-        </div>
+    <br/>
+    <div class="jumbotron">
+        <h1 class="display-4">Your Profile</h1>
+        <p class="lead">
+            Nickname:&nbsp<span th:utext="${name}"></span><br/>
+            Name:&nbsp<span th:utext="${userName}"></span><br/>
+            Lastname:&nbsp<span th:utext="${lastName}"></span><br/>
+            Email:&nbsp<span th:utext="${email}"></span>
+        <hr class="my-4">
+        <p>You can start playing.</p>
+        <a class="btn btn-primary btn-lg" href="/rooms" role="button">Rooms</a>
     </div>
 
 </div>
+
 </body>
 </html>
