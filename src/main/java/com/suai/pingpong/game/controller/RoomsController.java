@@ -36,7 +36,7 @@ public class RoomsController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/rooms.js")
+    @GetMapping(value = "/rooms.list")
     @ResponseBody
     public List<Room> getRooms() {
         ModelRoom modelRoom = ModelRoom.getInstance();

@@ -5,34 +5,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Rooms</title>
-    <script>
-        function updateRooms() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/rooms.js", true);
-            xhr.onload = function (en) {
-                var rooms = JSON.parse(xhr.responseText);
-                var roomsDiv = document.getElementById("rooms");
-                while (roomsDiv.firstChild) {
-                    roomsDiv.removeChild(roomsDiv.firstChild);
-                }
-                for (i = 0; i < rooms.length; i++){
-                    var p = document.createElement("p");
-                    var a = document.createElement("a");
-                    a.setAttribute("href", "/rooms/" + rooms[i].owner)
-                    a.innerHTML = rooms[i].owner;
-                    p.appendChild(a);
-                    roomsDiv.appendChild(p);
-                }
-            };
-            xhr.send();
-        }
-
-        setInterval(updateRooms, 2000);
-    </script>
+    <script th:src="@{/js/roomsList.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 </head>
-<body>
-<div id="rooms"></div>
+<body class="text-center">
 
+<nav class="navbar navbar-light bg-faded">
+    <div class="nav navbar-nav">
+        <a class="navbar-brand m-b-0" href="#">Ping-Pong</a>
+        <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/rooms">Rooms</a>
+        <a class="nav-item nav-link" href="/profile">Profile</a>
+        <a class="nav-item nav-link" href="/logout">Sign out</a>
+    </div>
+</nav>
+
+<div align="center" id="rooms" class="container"></div>
+
+<br/>
 <form action="#" th:action="@{/rooms}" th:object="${user}" method="post">
     <button type="submit" class="btn btn-primary btn-block">Create room</button>
 </form>
