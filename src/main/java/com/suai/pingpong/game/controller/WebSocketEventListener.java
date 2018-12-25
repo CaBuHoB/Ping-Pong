@@ -57,13 +57,15 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         String id = event.getSessionId();
         ActiveWebSocketUser activeWebSocketUser = repository.findUserBySessionId(id);
-        String username = activeWebSocketUser.getOwner();
-        GameModel gameModel = new GameModel();
-        gameModel.setAct("close");
-        gameModel.setUsername(username);
-        String jsonString = JSON.toJSONString(gameModel);
-        simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + username, jsonString);
-        repository.removeUser(activeWebSocketUser);
-        ModelRoom.getInstance().deleteRoom(username);
+        if (activeWebSocketUser != null) {
+            String username = activeWebSocketUser.getOwner();
+            GameModel gameModel = new GameModel();
+            gameModel.setAct("close");
+            gameModel.setUsername(username);
+            String jsonString = JSON.toJSONString(gameModel);
+            simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + username, jsonString);
+            repository.removeUser(activeWebSocketUser);
+            ModelRoom.getInstance().deleteRoom(username);
+        }
     }
 }

@@ -33,10 +33,13 @@ public class RoomsController {
         modelAndView.setViewName("rooms.html");
         ModelRoom modelRoom = ModelRoom.getInstance();
         modelAndView.addObject("rooms", modelRoom.list());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUsername(auth.getName());
+        modelAndView.addObject("username", user.getUsername());
         return modelAndView;
     }
 
-    @GetMapping(value = "/rooms.list")
+    @GetMapping(value = "/listRooms")
     @ResponseBody
     public List<Room> getRooms() {
         ModelRoom modelRoom = ModelRoom.getInstance();
@@ -70,7 +73,7 @@ public class RoomsController {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelRoom modelRoom = ModelRoom.getInstance();
         if (!modelRoom.list().contains(owner)) {
-            modelAndView.setViewName("wrongRoomName.html");
+            modelAndView.setViewName("../static/error/404.html");
             return modelAndView;
         } else if (!owner.equals(user)) {
             List<Room> rooms = modelRoom.getModelRoomList();

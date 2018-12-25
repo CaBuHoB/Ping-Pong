@@ -2,54 +2,74 @@
 <!--suppress ALL -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Websocket</title>
+    <title>Game room</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
+          integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
+            integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-light bg-faded">
-    <div class="nav navbar-nav">
-        <a class="navbar-brand m-b-0" href="#">Ping-Pong</a>
-        <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="/rooms">Rooms</a>
-        <a class="nav-item nav-link" href="/profile">Profile</a>
-        <a class="nav-item nav-link" href="/logout">Sign out</a>
+<nav class="shadow navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Ping-Pong</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav, #navbarNavEnd"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+            <a class="nav-item active nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/rooms">Rooms</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavEnd">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/profile" th:text="${username}"></a>
+            <a class="nav-item nav-link" href="/logout">Sign out</a>
+        </div>
     </div>
 </nav>
 
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-
 <span id="username" th:text="${username}" style="display: none"></span>
 
-<canvas id="pong"></canvas>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Game room</h1>
+        <p class="lead text-muted">Are you ready to win an opponent?</p>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="readinessCheck">
+            <label class="custom-control-label" for="readinessCheck">Ready</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="readinessOpponentCheck" disabled>
+            <label class="custom-control-label" for="readinessOpponentCheck">Opponet ready</label>
+        </div>
+    </div>
+</section>
 
-<!--<div class="form-check">-->
-    <!--<input type="checkbox" class="form-check-input" id="readinessCheck">-->
-    <!--<label class="form-check-label" for="readinessCheck">Ready</label>-->
-<!--</div>-->
-<!--<div class="form-check">-->
-    <!--<input type="checkbox" class="form-check-input" id="readinessOpponentCheck" disabled>-->
-    <!--<label class="form-check-label" for="readinessOpponentCheck">Opponet ready</label>-->
-<!--</div>-->
-<div class="form-check">
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" id="readinessCheck">
-        Ready
-    </label>
-</div>
-<div class="form-check">
-    <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" id="readinessOpponentCheck" disabled >
-        Opponet ready
-    </label>
+<div class="container" style="height: 400px;">
+    <div class="row h-100 justify-content-center align-items-center">
+        <canvas id="pong"></canvas>
+    </div>
 </div>
 
 <script th:src="@{/js/game.js}"></script>

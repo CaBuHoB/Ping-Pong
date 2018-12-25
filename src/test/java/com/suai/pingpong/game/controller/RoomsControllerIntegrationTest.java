@@ -45,7 +45,7 @@ public class RoomsControllerIntegrationTest {
     @Test
     public void getRooms() throws Exception {
         MockHttpSession session = logIn("getRooms");
-        mvc.perform(get("/rooms.list").session(session)).andDo(print());
+        mvc.perform(get("/listRooms").session(session)).andDo(print());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class RoomsControllerIntegrationTest {
         mvc.perform(post("/rooms").session(session)).andDo(print())
                 .andExpect(redirectedUrl("/rooms/openRoom"));
         mvc.perform(get("/rooms/someRoom").session(session))
-                .andExpect(MockMvcResultMatchers.view().name("wrongRoomName.html"));
+                .andExpect(MockMvcResultMatchers.view().name("../static/error/404.html"));
         mvc.perform(get("/rooms/openRoom").session(session)).andDo(print());
 
         MockHttpSession session2 = logIn("openRoom2");

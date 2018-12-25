@@ -1,5 +1,7 @@
 package com.suai.pingpong.login.controller;
 
+import com.suai.pingpong.login.model.ModelQuotes;
+import com.suai.pingpong.login.model.Quote;
 import com.suai.pingpong.login.model.User;
 import com.suai.pingpong.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     private static final String URL_HTML = "registration.html";
+    private static final String USERNAME = "username";
 
     @Autowired
     private UserService userService;
@@ -50,7 +53,7 @@ public class LoginController {
         userExists = userService.findUserByUsername(user.getUsername());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("username", "error.user",
+                    .rejectValue(USERNAME, "error.user",
                             "There is already a user registered with the username provided");
         }
     }
@@ -83,5 +86,18 @@ public class LoginController {
         return modelAndView;
     }
 
-
+    @GetMapping("/")
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("index.html");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUsername(auth.getName());
+        if (user == null) {
+            modelAndView.addObject(USERNAME, "guest");
+        } else {
+            modelAndView.addObject(USERNAME, user.getUsername());
+        }
+        Quote quote = ModelQuotes.getInstance().getRandomQuote();
+        modelAndView.addObject("quote", quote);
+        return modelAndView;
+    }
 }

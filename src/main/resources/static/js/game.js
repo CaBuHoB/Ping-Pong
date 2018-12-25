@@ -94,7 +94,7 @@ function collision(objA, objB) {
 // движение игрока
 function playerMove(e) {
     if (start) {
-        var y = e.pageY;
+        var y = e.pageY - 390;
         if (name === room) { // условие проверяет не выходит ли ракетка за пределы поля
             if (player.height / 2 + 10 < y && y < game.height - player.height / 2 - 10) {
                 player.y = y - player.height / 2; // привязываем положение мыши к середине ракетки
@@ -256,6 +256,9 @@ function checkPlayers() {
         $('#readinessOpponentCheck').prop('checked', false);
         canIStart = false;
         canOpponentStart = false;
+    } else if (canIStart) {
+        stompClient.send("/app/roomSocket/" + room, {},
+            JSON.stringify({'act': 'check', 'username': name, 'canStart': canIStart}));
     }
 }
 
