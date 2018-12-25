@@ -40,9 +40,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    private void checkErrors(@Valid User user, BindingResult bindingResult) {
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
@@ -55,6 +53,12 @@ public class LoginController {
                     .rejectValue("username", "error.user",
                             "There is already a user registered with the username provided");
         }
+    }
+
+    @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        checkErrors(user, bindingResult);
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName(URL_HTML);
         } else {

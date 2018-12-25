@@ -43,7 +43,6 @@ public class WebSocketEventListener {
         assert user != null;
         String username = user.getName();
         String id = (String) headers.get("simpSessionId");
-
         if (username.equals(owner)) {
             ActiveWebSocketUser activeWebSocketUser = new ActiveWebSocketUser(username, id);
             repository.setUser(activeWebSocketUser);
@@ -51,7 +50,6 @@ public class WebSocketEventListener {
             ActiveWebSocketUser activeWebSocketUser = repository.findUserByUsername(owner);
             activeWebSocketUser.setUsername(username, id);
         }
-
         log.info("Received a new web socket subscribe");
     }
 

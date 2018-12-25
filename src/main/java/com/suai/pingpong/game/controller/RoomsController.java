@@ -66,10 +66,8 @@ public class RoomsController {
 
     @GetMapping(value = "/rooms/{owner}")
     public ModelAndView openRoom(@PathVariable String owner) {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String user = auth.getName();
-
+        ModelAndView modelAndView = new ModelAndView("userRoom.html");
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelRoom modelRoom = ModelRoom.getInstance();
         if (!modelRoom.list().contains(owner)) {
             modelAndView.setViewName("wrongRoomName.html");
@@ -77,15 +75,12 @@ public class RoomsController {
         } else if (!owner.equals(user)) {
             List<Room> rooms = modelRoom.getModelRoomList();
             for (Room roomFromList : rooms) {
-                if (roomFromList.getOwner().equals(owner)) {
+                if (roomFromList.getOwner().equals(owner))
                     roomFromList.setNumberOfUsers(2);
-                }
             }
         }
-
         modelAndView.addObject("owner", owner);
         modelAndView.addObject("username", user);
-        modelAndView.setViewName("userRoom.html");
         return modelAndView;
     }
 
