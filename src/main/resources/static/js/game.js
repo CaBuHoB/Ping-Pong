@@ -1,31 +1,37 @@
-var stompClient = null;
-var sock = null;
+var stompClient = null, sock = null;
 var name = document.getElementById("username").innerText;
-var canOpponentStart = false;
-var canIStart = false;
+var canOpponentStart = false, canIStart = false;
 var room = location.pathname.split('/')[2];
 var ball, player, opponent, game, start, context;
+
+function updateBallAndScores(json) {
+    var ballAndScores = json.ballAndScores;
+    console.log(ballAndScores);
+    ball.x = ballAndScores.x;
+    ball.y = ballAndScores.y;
+    opponent.scores = ballAndScores.opponentScores;
+    player.scores = ballAndScores.playerScores;
+    checkScore();
+}
+
+function updateStatus(json) {
+    canOpponentStart = json.canStart;
+    // noinspection JSJQueryEfficiency
+    $('#readinessOpponentCheck').prop('checked', canOpponentStart);
+    // noinspection JSJQueryEfficiency
+    $('#readinessOpponentCheck').prop('indeterminate', !canOpponentStart);
+}
 
 function checkActs(json) {
     switch (json.act) {
         case "BallAndScores":
             if (json.username !== name) {
-                var ballAndScores = json.ballAndScores;
-                console.log(ballAndScores);
-                ball.x = ballAndScores.x;
-                ball.y = ballAndScores.y;
-                opponent.scores = ballAndScores.opponentScores;
-                player.scores = ballAndScores.playerScores;
-                checkScore();
+                updateBallAndScores(json);
             }
             break;
         case "check":
             if (json.username !== name) {
-                canOpponentStart = json.canStart;
-                // noinspection JSJQueryEfficiency
-                $('#readinessOpponentCheck').prop('checked', canOpponentStart);
-                // noinspection JSJQueryEfficiency
-                $('#readinessOpponentCheck').prop('indeterminate', !canOpponentStart);
+                updateStatus(json);
             }
             break;
         case "close":
@@ -33,6 +39,21 @@ function checkActs(json) {
             break;
         default:
             break;
+    }
+}
+
+function processingRequest(greeting, room) {
+    var json = JSON.parse(greeting.body);
+    if (json.act != null) {
+        checkActs(json);
+    } else {
+        if (json.username !== name) {
+            if (name === room) {
+                opponent.y = json.y;
+            } else {
+                player.y = json.y;
+            }
+        }
     }
 }
 
@@ -46,24 +67,12 @@ function connect() {
         var room = location.pathname.split('/')[2];
         // noinspection JSCheckFunctionSignatures
         stompClient.subscribe('/topic/roomSocket/' + room, function (greeting) {
-            var json = JSON.parse(greeting.body);
-            if (json.act != null) {
-                checkActs(json);
-            } else {
-                if (json.username !== name) {
-                    if (name === room) {
-                        opponent.y = json.y;
-                    } else {
-                        player.y = json.y;
-                    }
-                }
-            }
+            processingRequest(greeting, room);
         });
     });
 }
 
 // класс определяющий параметры игрового прямоугольника и метод для его отрисовки
-
 function rect(color, x, y, width, height) {
     this.color = color; // цвет прямоугольника
     this.x = x; // координата х
@@ -78,33 +87,27 @@ function rect(color, x, y, width, height) {
 }
 
 // функция проверяет пересекаются ли переданные ей прямоугольные объекты
-
 function collision(objA, objB) {
     return objA.x + objA.width > objB.x && objA.x < objB.x + objB.width && objA.y + objA.height > objB.y && objA.y < objB.y + objB.height;
 }
 
 // движение игрока
-
 function playerMove(e) {
     if (start) {
         var y = e.pageY;
-        // условие проверяет не выходит ли ракетка за пределы поля
-        if (name === room) {
+        if (name === room) { // условие проверяет не выходит ли ракетка за пределы поля
             if (player.height / 2 + 10 < y && y < game.height - player.height / 2 - 10) {
-                // привязываем положение мыши к середине ракетки
-                player.y = y - player.height / 2;
+                player.y = y - player.height / 2; // привязываем положение мыши к середине ракетки
                 stompClient.send("/app/roomSocket/" + room, {}, JSON.stringify({'username': name, 'y': player.y}));
             }
         } else {
             if (opponent.height / 2 + 10 < y && y < game.height - opponent.height / 2 - 10) {
-                // привязываем положение мыши к середине ракетки
-                opponent.y = y - opponent.height / 2;
+                opponent.y = y - opponent.height / 2; // привязываем положение мыши к середине ракетки
                 stompClient.send("/app/roomSocket/" + room, {}, JSON.stringify({'username': name, 'y': opponent.y}));
             }
         }
     }
 }
-
 
 function startGame() {
     if (!start) {
@@ -115,7 +118,6 @@ function startGame() {
 }
 
 // отрисовка игры
-
 function draw() {
     game.draw(); // игровое поле
     // разделительная полоса
@@ -150,7 +152,6 @@ function draw() {
 }
 
 // игровые изменения которые нужно произвести
-
 function checkScore() {
     if (opponent.scores === 10 || player.scores === 10) {
         if (opponent.scores === 10) { // победа opponent
@@ -199,28 +200,20 @@ function ballCoordinates() {
 
 function racketContact() {
     if ((collision(opponent, ball) && ball.vX < 0) || (collision(player, ball) && ball.vX > 0)) {
-        // приращение скорости шарика
         if (ball.vX < 9 && -9 < ball.vX) {
-            if (ball.vX < 0) {
-                ball.vX--;
-            } else {
-                ball.vX++;
-            }
-            if (ball.vY < 0) {
-                ball.vY--;
-            } else {
-                ball.vY++;
-            }
+            if (ball.vX < 0) ball.vX--;
+            else ball.vX++;
+            if (ball.vY < 0) ball.vY--;
+            else ball.vY++;
         }
         ball.vX = -ball.vX;
     }
-    // приращение координат
     ball.x += ball.vX;
     ball.y += ball.vY;
 }
 
 function sendDataToOpponent() {
-    if (start || (opponent.scores === 10 || player.scores === 10) ) {
+    if (start || (opponent.scores === 10 || player.scores === 10)) {
         stompClient.send("/app/roomSocket/" + room, {},
             JSON.stringify({
                 'act': 'BallAndScores', 'username': name,
@@ -228,7 +221,7 @@ function sendDataToOpponent() {
                     'opponentScores': opponent.scores, 'playerScores': player.scores, 'x': ball.x, 'y': ball.y
                 }
             }));
-        if(opponent.scores === 10 || player.scores === 10) {
+        if (opponent.scores === 10 || player.scores === 10) {
             opponent.scores = 0;
             player.scores = 0;
         }
@@ -270,24 +263,19 @@ function checkPlayers() {
 
 function init() {
     start = false;
-    // объект который задаёт игровое поле
     // noinspection JSPotentiallyInvalidConstructorUsage
     game = new rect("#000", 0, 0, 480, 320);
     game.total = 0;
     game.win = 0;
     game.lose = 0;
-    // Ракетки-игроки
     // noinspection JSPotentiallyInvalidConstructorUsage
     opponent = new rect("#ffffff", 10, game.height / 2 - 40, 20, 80);
     // noinspection JSPotentiallyInvalidConstructorUsage
     player = new rect("#ffffff", game.width - 30, game.height / 2 - 40, 20, 80);
-    // количество очков
     opponent.scores = 0;
     player.scores = 0;
-    // наш квадратный игровой "шарик"
     // noinspection JSPotentiallyInvalidConstructorUsage
     ball = new rect("#fff", 40, game.height / 2 - 10, 20, 20);
-    // скорость шарика
     ball.vX = 0; // скорость по оси х
     ball.vY = 0; // скорость по оси у
     var canvas = document.getElementById("pong");
