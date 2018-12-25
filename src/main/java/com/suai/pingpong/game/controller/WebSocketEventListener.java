@@ -37,9 +37,11 @@ public class WebSocketEventListener {
     public void handleWebSocketSubscribeListener(SessionSubscribeEvent event) {
         MessageHeaders headers = event.getMessage().getHeaders();
         String owner = (String) headers.get("simpDestination");
-        assert owner != null; owner = owner.substring(owner.lastIndexOf('/') + 1);
+        assert owner != null;
+        owner = owner.substring(owner.lastIndexOf('/') + 1);
         UsernamePasswordAuthenticationToken user = (UsernamePasswordAuthenticationToken) headers.get("simpUser");
-        assert user != null; String username = user.getName();
+        assert user != null;
+        String username = user.getName();
         String id = (String) headers.get("simpSessionId");
         if (username.equals(owner)) {
             ActiveWebSocketUser activeWebSocketUser = new ActiveWebSocketUser(username, id);
