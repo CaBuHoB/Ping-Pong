@@ -6,6 +6,36 @@ var canIStart = false;
 var room = location.pathname.split('/')[2];
 var ball, player, opponent, game, start, context;
 
+function checkActs(json) {
+    switch (json.act) {
+        case "BallAndScores":
+            if (json.username !== name) {
+                var ballAndScores = json.ballAndScores;
+                console.log(ballAndScores);
+                ball.x = ballAndScores.x;
+                ball.y = ballAndScores.y;
+                opponent.scores = ballAndScores.opponentScores;
+                player.scores = ballAndScores.playerScores;
+                checkScore();
+            }
+            break;
+        case "check":
+            if (json.username !== name) {
+                canOpponentStart = json.canStart;
+                // noinspection JSJQueryEfficiency
+                $('#readinessOpponentCheck').prop('checked', canOpponentStart);
+                // noinspection JSJQueryEfficiency
+                $('#readinessOpponentCheck').prop('indeterminate', !canOpponentStart);
+            }
+            break;
+        case "close":
+            window.location.replace("/rooms");
+            break;
+        default:
+            break;
+    }
+}
+
 function connect() {
     // noinspection JSUnresolvedFunction
     sock = new SockJS('/ws');
@@ -18,33 +48,7 @@ function connect() {
         stompClient.subscribe('/topic/roomSocket/' + room, function (greeting) {
             var json = JSON.parse(greeting.body);
             if (json.act != null) {
-                switch (json.act) {
-                    case "BallAndScores":
-                        if (json.username !== name) {
-                            var ballAndScores = json.ballAndScores;
-                            console.log(ballAndScores);
-                            ball.x = ballAndScores.x;
-                            ball.y = ballAndScores.y;
-                            opponent.scores = ballAndScores.opponentScores;
-                            player.scores = ballAndScores.playerScores;
-                            checkScore();
-                        }
-                        break;
-                    case "check":
-                        if (json.username !== name) {
-                            canOpponentStart = json.canStart;
-                            // noinspection JSJQueryEfficiency
-                            $('#readinessOpponentCheck').prop('checked', canOpponentStart);
-                            // noinspection JSJQueryEfficiency
-                            $('#readinessOpponentCheck').prop('indeterminate', !canOpponentStart);
-                        }
-                        break;
-                    case "close":
-                        window.location.replace("/rooms");
-                        break;
-                    default:
-                        break;
-                }
+                checkActs(json);
             } else {
                 if (json.username !== name) {
                     if (name === room) {
