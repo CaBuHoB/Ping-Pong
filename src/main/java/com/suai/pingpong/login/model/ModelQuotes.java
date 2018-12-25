@@ -2,11 +2,10 @@ package com.suai.pingpong.login.model;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,10 +28,9 @@ public class ModelQuotes {
     }
 
     private void loadQuotes() {
-        log.info(System.getenv("PWD"));
-        Resource resource = new ClassPathResource("/static/Quotes");
-        try (FileReader fileReader = new FileReader(resource.getFile());
-             Scanner scanner = new Scanner(fileReader)) {
+        try (InputStream is = getClass().getResourceAsStream("/static/Quotes");
+             InputStreamReader isr = new InputStreamReader(is);
+             Scanner scanner = new Scanner(isr)) {
             while (scanner.hasNext()) {
                 Quote quote = new Quote(scanner.nextLine(), scanner.nextLine());
                 quoteList.add(quote);
