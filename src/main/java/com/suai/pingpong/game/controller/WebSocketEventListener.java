@@ -16,9 +16,6 @@ import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
-import java.util.List;
-import java.util.TreeMap;
-
 
 @Component
 @Log4j2
@@ -45,7 +42,7 @@ public class WebSocketEventListener {
         UsernamePasswordAuthenticationToken user = (UsernamePasswordAuthenticationToken) headers.get("simpUser");
         assert user != null;
         String username = user.getName();
-        String id = (String) event.getMessage().getHeaders().get("simpSessionId");
+        String id = (String) headers.get("simpSessionId");
 
         if (username.equals(owner)) {
             ActiveWebSocketUser activeWebSocketUser = new ActiveWebSocketUser(username, id);
@@ -62,33 +59,13 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         String id = event.getSessionId();
         ActiveWebSocketUser activeWebSocketUser = repository.findUserBySessionId(id);
-        if (activeWebSocketUser != null) {
-            String username = activeWebSocketUser.getOwner();
-
-            GameModel gameModel = new GameModel();
-            gameModel.setAct("close");
-            gameModel.setUsername(username);
-            String jsonString = JSON.toJSONString(gameModel);
-            simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + username, jsonString);
-            repository.removeUser(activeWebSocketUser);
-            ModelRoom.getInstance().deleteRoom(username);
-        } else {
-            List<ActiveWebSocketUser> list = repository.getListActiveWebSocketUser();
-            for (ActiveWebSocketUser user : list) {
-                TreeMap<String, String> map = (TreeMap<String, String>) user.getUsername();
-                for (String username : map.keySet()) {
-                    if (map.get(username).equals(id)) {
-                        map.replace(username, id);
-                        GameModel gameModel = new GameModel();
-                        gameModel.setAct("close");
-                        gameModel.setUsername(username);
-                        String jsonString = JSON.toJSONString(gameModel);
-                        simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + user.getOwner(), jsonString);
-                        ModelRoom.setNumberOfUsers(user.getOwner(), 1);
-                        break;
-                    }
-                }
-            }
-        }
+        String username = activeWebSocketUser.getOwner();
+        GameModel gameModel = new GameModel();
+        gameModel.setAct("close");
+        gameModel.setUsername(username);
+        String jsonString = JSON.toJSONString(gameModel);
+        simpMessagingTemplate.convertAndSend("/topic/roomSocket/" + username, jsonString);
+        repository.removeUser(activeWebSocketUser);
+        ModelRoom.getInstance().deleteRoom(username);
     }
 }

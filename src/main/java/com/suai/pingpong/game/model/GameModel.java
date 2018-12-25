@@ -11,7 +11,7 @@ public class GameModel {
     private BallAndScores ballAndScores;
 
     @Data
-    private class BallAndScores {
+    static class BallAndScores {
         private int opponentScores;
         private int playerScores;
         private int x;
