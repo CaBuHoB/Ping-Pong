@@ -1,9 +1,3 @@
-function getDivRow() {
-    var divRow = document.createElement("div");
-    divRow.className = "row";
-    return divRow;
-}
-
 function getDivCol() {
     var divCol = document.createElement("div");
     divCol.className = "col-md-4";
@@ -67,13 +61,11 @@ function getDivCard(room) {
 
 function outputRooms(rooms, roomsDiv) {
     for (var i = 0; i < rooms.length; i++) {
-        var divRow = getDivRow();
         var divCol = getDivCol();
         var divCard = getDivCard(rooms[i]);
 
         divCol.appendChild(divCard);
-        divRow.appendChild(divCol);
-        roomsDiv.appendChild(divRow);
+        roomsDiv.appendChild(divCol);
     }
 }
 
