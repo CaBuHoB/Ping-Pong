@@ -7,12 +7,10 @@ import org.springframework.core.io.Resource;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Log4j2
 public class ModelQuotes {
@@ -20,24 +18,17 @@ public class ModelQuotes {
     private static final ModelQuotes instance = new ModelQuotes();
     private final List<Quote> quoteList;
 
-    private ModelQuotes() {
+    public ModelQuotes() {
         quoteList = new ArrayList<>();
         loadQuotes();
     }
 
-    public Quote getRandomQuote(){
-        Random random;
-        int index = 0;
-        try {
-            random = SecureRandom.getInstanceStrong();
-            index = random.nextInt(quoteList.size());
-        } catch (NoSuchAlgorithmException e) {
-            log.info(e.getMessage());
-        }
+    public Quote getRandomQuote() {
+        int index = ThreadLocalRandom.current().nextInt(0, quoteList.size());
         return quoteList.get(index);
     }
 
-    private void loadQuotes(){
+    private void loadQuotes() {
         Resource resource = new ClassPathResource("/static/Quotes");
         try (FileReader fileReader = new FileReader(resource.getFile());
              Scanner scanner = new Scanner(fileReader)) {

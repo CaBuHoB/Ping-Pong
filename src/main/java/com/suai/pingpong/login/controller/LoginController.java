@@ -26,7 +26,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value =  "/login")
+    @GetMapping(value = "/login")
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login.html");
@@ -96,7 +96,7 @@ public class LoginController {
         } else {
             modelAndView.addObject(USERNAME, user.getUsername());
         }
-        Quote quote = ModelQuotes.getInstance().getRandomQuote();
+        Quote quote = new ModelQuotes().getRandomQuote();
         modelAndView.addObject("quote", quote);
         return modelAndView;
     }

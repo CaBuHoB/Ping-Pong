@@ -24,7 +24,8 @@
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavEnd">
         <div class="navbar-nav">
-            <a th:if="${username != 'guest'}" class="nav-item nav-link active" href="/profile" th:text="${username}"></a>
+            <a th:if="${username != 'guest'}" class="nav-item nav-link active" href="/profile"
+               th:text="${username}"></a>
             <a th:if="${username == 'guest'}" class="nav-item nav-link" href="/login">Sign in</a>
             <a th:if="${username != 'guest'}" class="nav-item nav-link" href="/logout">Sign out</a>
             <a th:if="${username == 'guest'}" class="nav-item nav-link" href="/registration">Sign up</a>

@@ -12,29 +12,29 @@ public class ActiveWebSocketUserRepository {
     @Getter
     private List<ActiveWebSocketUser> listActiveWebSocketUser = new ArrayList<>();
 
-    public ActiveWebSocketUser findUserByUsername(String username){
-        for(ActiveWebSocketUser user : listActiveWebSocketUser){
-            if (user.getOwner().equals(username)){
+    public ActiveWebSocketUser findUserByUsername(String username) {
+        for (ActiveWebSocketUser user : listActiveWebSocketUser) {
+            if (user.getOwner().equals(username)) {
                 return user;
             }
         }
         return null;
     }
 
-    public ActiveWebSocketUser findUserBySessionId(String sessionId){
-        for(ActiveWebSocketUser user : listActiveWebSocketUser){
-            if (user.getSessionId().equals(sessionId)){
+    public ActiveWebSocketUser findUserBySessionId(String sessionId) {
+        for (ActiveWebSocketUser user : listActiveWebSocketUser) {
+            if (user.getSessionId().equals(sessionId)) {
                 return user;
             }
         }
         return null;
     }
 
-    public void setUser(ActiveWebSocketUser user){
+    public void setUser(ActiveWebSocketUser user) {
         listActiveWebSocketUser.add(user);
     }
 
-    public void removeUser(ActiveWebSocketUser user){
+    public void removeUser(ActiveWebSocketUser user) {
         listActiveWebSocketUser.remove(user);
     }
 }
