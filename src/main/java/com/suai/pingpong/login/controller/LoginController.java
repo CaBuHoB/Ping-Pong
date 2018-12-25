@@ -96,7 +96,7 @@ public class LoginController {
         } else {
             modelAndView.addObject(USERNAME, user.getUsername());
         }
-        Quote quote = new ModelQuotes().getRandomQuote();
+        Quote quote = ModelQuotes.getInstance().getRandomQuote();
         modelAndView.addObject("quote", quote);
         return modelAndView;
     }

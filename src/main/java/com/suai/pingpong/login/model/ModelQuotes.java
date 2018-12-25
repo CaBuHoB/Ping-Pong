@@ -18,7 +18,7 @@ public class ModelQuotes {
     private static final ModelQuotes instance = new ModelQuotes();
     private final List<Quote> quoteList;
 
-    public ModelQuotes() {
+    private ModelQuotes() {
         quoteList = new ArrayList<>();
         loadQuotes();
     }
@@ -29,6 +29,7 @@ public class ModelQuotes {
     }
 
     private void loadQuotes() {
+        log.info(System.getenv("PWD"));
         Resource resource = new ClassPathResource("/static/Quotes");
         try (FileReader fileReader = new FileReader(resource.getFile());
              Scanner scanner = new Scanner(fileReader)) {

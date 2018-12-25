@@ -6,7 +6,8 @@ public class ModelQuotesTest {
 
     @Test
     public void getRandomQuote() {
+        ModelQuotes instance = ModelQuotes.getInstance();
         for (int i = 0; i < 100; i++)
-            new ModelQuotes().getRandomQuote();
+            instance.getRandomQuote();
     }
 }
