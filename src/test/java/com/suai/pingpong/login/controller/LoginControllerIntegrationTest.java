@@ -32,9 +32,8 @@ public class LoginControllerIntegrationTest {
         mvc.perform(post("/login").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .content("username=" + "login" + "&password=testpas").session(session));
 
-        mvc.perform(get("/login").session(session)).andDo(print()).andExpect(status().isOk());
-        mvc.perform(get("/profile").session(session)).andDo(print()).
-                andExpect(redirectedUrl(null));
+        mvc.perform(get("/login").session(session)).andExpect(status().isOk());
+        mvc.perform(get("/profile").session(session)).andExpect(redirectedUrl(null));
     }
 
     @Test
@@ -57,7 +56,17 @@ public class LoginControllerIntegrationTest {
 
     @Test
     public void profile() throws Exception {
-        mvc.perform(get("/profile")).andDo(print()).
-                andExpect(redirectedUrl("http://localhost/login"));
+        mvc.perform(get("/profile")).andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    public void index() throws Exception {
+        MockHttpSession session = new MockHttpSession();
+        mvc.perform(get("/").session(session));
+        mvc.perform(post("/registration").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .content("name=test&lastName=test&username=login&email=login@test.ru&password=testpas").session(session));
+        mvc.perform(post("/login").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .content("username=" + "login" + "&password=testpas").session(session));
+        mvc.perform(get("/").session(session));
     }
 }
