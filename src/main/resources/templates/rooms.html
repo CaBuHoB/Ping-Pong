@@ -6,27 +6,51 @@
     <meta charset="UTF-8">
     <title>Rooms</title>
     <script th:src="@{/js/roomsList.js}"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 </head>
 <body class="text-center">
 
-<nav class="navbar navbar-light bg-faded">
-    <div class="nav navbar-nav">
-        <a class="navbar-brand m-b-0" href="#">Ping-Pong</a>
-        <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link active" href="/rooms">Rooms</a>
-        <a class="nav-item nav-link" href="/profile">Profile</a>
-        <a class="nav-item nav-link" href="/logout">Sign out</a>
+<nav class="shadow navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Ping-Pong</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav, #navbarNavEnd"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/rooms">Rooms</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavEnd">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/profile" th:text="${username}"></a>
+            <a class="nav-item nav-link" href="/logout">Sign out</a>
+        </div>
     </div>
 </nav>
 
-<div align="center" id="rooms" class="container"></div>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Rooms</h1>
+        <p class="lead text-muted">Something short about the rooms.</p>
+        <form th:action="@{/rooms}" th:object="${user}" method="post">
+            <button type="submit" class="btn btn-primary">Create room</button>
+        </form>
+    </div>
+</section>
 
-<br/>
-<form action="#" th:action="@{/rooms}" th:object="${user}" method="post">
-    <button type="submit" class="btn btn-primary btn-block">Create room</button>
-</form>
+<div class="container" id="rooms"></div>
 
 </body>
 </html>

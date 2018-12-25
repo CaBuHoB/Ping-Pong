@@ -3,22 +3,19 @@ package com.suai.pingpong.game.controller;
 import com.suai.pingpong.game.model.GameModel;
 import com.suai.pingpong.login.service.UserService;
 import org.junit.Test;
-import org.springframework.web.servlet.ModelAndView;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RoomsControllerTest {
 
-    private final RoomsController roomsController = new RoomsController(new UserService(null, null, null));
+    @Mock
+    private UserService userService;
 
-    @Test
-    public void view() {
-        ModelAndView modelAndView = new ModelAndView("rooms.html");
-        ModelAndView modelAndViewFromMethod = roomsController.view();
-        assertEquals(modelAndView.getViewName(), modelAndViewFromMethod.getViewName());
-        assertNotNull(modelAndViewFromMethod.getModel().get("rooms"));
-    }
+    private final RoomsController roomsController = new RoomsController(userService);
 
     @Test
     public void sendCoordinate() {

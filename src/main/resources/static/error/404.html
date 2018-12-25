@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/error.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,700%7CRoboto:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://spyre-theme.bitbucket.io/v1.1.1/dist/css/theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/error.css" th:href="@{/css/error.css}">
 </head>
 <body>
-<div class="container">
-    <div class="row h-100vh align-items-center text-white">
-        <div class="col">
-            <h1 class="mb-0 fs-6 fs-lg-9 fw-medium">404</h1>
-            <p class="mb-5 fs-1 fs-lg-2 fw-light">It looks like you're lost...</p>
-            <a th:href="@{/}" class="btn btn-primary btn-lg px-4 px-lg-5">Go to Homepage</a>
+<main class="main minh-100vh">
+    <section class="text-center py-0">
+        <div class="bg-container overlay overlay-20"></div>
+        <div class="container">
+            <div class="row h-100vh align-items-center text-white">
+                <div class="col">
+                    <h1 class="mb-0 fs-6 fs-lg-9 fw-medium">404</h1>
+                    <p class="mb-5 fs-1 fs-lg-2 fw-light">It looks like you're lost...</p>
+                    <a href="/" class="btn btn-danger btn-lg px-4 px-lg-5">GO TO HOMEPAGE</a>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <div class="fixed-bottom">
+        <p class="fs--2 text-center text-white">© Ping-Pong, 2018 SUAI56</p>
     </div>
-</div>
-<div class="parent">
-<p class="text">
-    <b>404</b>
-    <br/>It looks like you're lost...<br/><br/></p>
-
-<a href='/'><button class="button">GO TO HOMEPAGE</button></a>
-
-</div>
+</main>
 
 </body>
 </html>

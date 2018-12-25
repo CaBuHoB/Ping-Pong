@@ -38,33 +38,31 @@ public class RoomsControllerIntegrationTest {
     @Test
     public void view() throws Exception {
         MockHttpSession session = logIn("view");
-        mvc.perform(get("/rooms").session(session)).andDo(print()).
+        mvc.perform(get("/rooms").session(session)).
                 andExpect(redirectedUrl(null));
     }
 
     @Test
     public void getRooms() throws Exception {
         MockHttpSession session = logIn("getRooms");
-        mvc.perform(get("/rooms.list").session(session)).andDo(print());
+        mvc.perform(get("/listRooms").session(session));
     }
 
     @Test
     public void create() throws Exception {
         MockHttpSession session = logIn("create");
-        mvc.perform(post("/rooms").session(session)).andDo(print())
-                .andExpect(redirectedUrl("/rooms/create"));
+        mvc.perform(post("/rooms").session(session)).andExpect(redirectedUrl("/rooms/create"));
     }
 
     @Test
     public void openRoom() throws Exception {
         MockHttpSession session = logIn("openRoom");
-        mvc.perform(post("/rooms").session(session)).andDo(print())
-                .andExpect(redirectedUrl("/rooms/openRoom"));
+        mvc.perform(post("/rooms").session(session)).andExpect(redirectedUrl("/rooms/openRoom"));
         mvc.perform(get("/rooms/someRoom").session(session))
-                .andExpect(MockMvcResultMatchers.view().name("wrongRoomName.html"));
-        mvc.perform(get("/rooms/openRoom").session(session)).andDo(print());
+                .andExpect(MockMvcResultMatchers.view().name("../static/error/404.html"));
+        mvc.perform(get("/rooms/openRoom").session(session));
 
         MockHttpSession session2 = logIn("openRoom2");
-        mvc.perform(get("/rooms/openRoom").session(session2)).andDo(print());
+        mvc.perform(get("/rooms/openRoom").session(session2));
     }
 }

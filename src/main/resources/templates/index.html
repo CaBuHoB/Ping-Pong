@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Ping-Pong</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<body>
+
+<nav class="shadow navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Ping-Pong</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav, #navbarNavEnd"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+            <a class="nav-item active nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/rooms">Rooms</a>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavEnd">
+        <div class="navbar-nav">
+            <a th:if="${username != 'guest'}" class="nav-item nav-link active" href="/profile" th:text="${username}"></a>
+            <a th:if="${username == 'guest'}" class="nav-item nav-link" href="/login">Sign in</a>
+            <a th:if="${username != 'guest'}" class="nav-item nav-link" href="/logout">Sign out</a>
+            <a th:if="${username == 'guest'}" class="nav-item nav-link" href="/registration">Sign up</a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="my-lg-4 p-4">
+    <blockquote class="blockquote text-center my-lg-5 p-5">
+        <h3 class="mb-0 w-50 mx-auto" th:text="${quote.quote}"></h3>
+        <footer class="blockquote-footer" th:text="${quote.person}"></footer>
+    </blockquote>
+</div>
+
+</body>
+</html>
