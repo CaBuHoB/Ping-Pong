@@ -1,8 +1,6 @@
 package com.suai.pingpong.login.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -13,8 +11,6 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
-@Builder
-@AllArgsConstructor
 @Entity
 @Table(name = "user")
 @NoArgsConstructor

@@ -78,11 +78,6 @@ public class RoomsController {
             List<Room> rooms = modelRoom.getModelRoomList();
             for (Room roomFromList : rooms) {
                 if (roomFromList.getOwner().equals(owner)) {
-                    if (roomFromList.getNumberOfUsers() == 2) {
-                        // выдать ошибку о том, что комната уже заполнена
-                        modelAndView.setViewName("redirect:/rooms");
-                        return modelAndView;
-                    }
                     roomFromList.setNumberOfUsers(2);
                 }
             }

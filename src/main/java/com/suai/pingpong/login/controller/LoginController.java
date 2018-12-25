@@ -3,6 +3,7 @@ package com.suai.pingpong.login.controller;
 import com.suai.pingpong.login.model.User;
 import com.suai.pingpong.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping("/registration")
+    @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
@@ -66,7 +67,7 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView home() {
+    public ModelAndView profile() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUsername(auth.getName());

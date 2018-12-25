@@ -9,7 +9,7 @@ function updateRooms() {
         }
 
 
-        for (i = 0; i < rooms.length; i++){
+        for (var i = 0; i < rooms.length; i++){
             var divCard = document.createElement("div");
             divCard.className = "card w-50";
 
