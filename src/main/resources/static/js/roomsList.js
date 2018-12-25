@@ -37,7 +37,7 @@ function getCardButton(room) {
     a.className = "btn btn-sm btn-outline-secondary";
     a.innerText = "Join";
     a.href = "/rooms/" + room.owner;
-    if (room.numberOfUsers === 2){
+    if (room.numberOfUsers === 2) {
         a.style.pointerEvents = "none";
     }
     return a;
@@ -66,7 +66,7 @@ function getDivCard(room) {
 }
 
 function outputRooms(rooms, roomsDiv) {
-    for (var i = 0; i < rooms.length; i++){
+    for (var i = 0; i < rooms.length; i++) {
         var divRow = getDivRow();
         var divCol = getDivCol();
         var divCard = getDivCard(rooms[i]);

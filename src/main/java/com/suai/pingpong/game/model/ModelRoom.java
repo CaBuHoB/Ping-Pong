@@ -36,8 +36,8 @@ public class ModelRoom {
         }
     }
 
-    public static void setNumberOfUsers(String owner, int number){
-        for (Room roomFromList : instance.modelRoomList){
+    public static void setNumberOfUsers(String owner, int number) {
+        for (Room roomFromList : instance.modelRoomList) {
             if (roomFromList.getOwner().equals(owner)) {
                 roomFromList.setNumberOfUsers(number);
             }

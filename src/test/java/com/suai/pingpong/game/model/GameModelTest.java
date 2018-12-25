@@ -33,7 +33,7 @@ public class GameModelTest {
         assertEquals(0, gameModel.getY());
     }
 
-    private void ballAndScoresGetSetTest(GameModel.BallAndScores ballAndScores){
+    private void ballAndScoresGetSetTest(GameModel.BallAndScores ballAndScores) {
         ballAndScores.setOpponentScores(1);
         assertEquals(1, ballAndScores.getOpponentScores());
         ballAndScores.setPlayerScores(1);
@@ -44,7 +44,7 @@ public class GameModelTest {
         assertEquals(1, ballAndScores.getY());
     }
 
-    private void ballAndScoresOtherTest(GameModel.BallAndScores ballAndScores){
+    private void ballAndScoresOtherTest(GameModel.BallAndScores ballAndScores) {
         assertNotEquals(0, ballAndScores.hashCode());
         assertEquals(ballAndScores, ballAndScores);
         assertTrue(ballAndScores.canEqual(ballAndScores));

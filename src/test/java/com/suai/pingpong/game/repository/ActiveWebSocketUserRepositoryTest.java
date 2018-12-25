@@ -14,7 +14,7 @@ public class ActiveWebSocketUserRepositoryTest {
     private final ActiveWebSocketUserRepository activeWebSocketUserRepository = new ActiveWebSocketUserRepository();
 
     @Test
-    public void getActiveWebSocketUserRepository(){
+    public void getActiveWebSocketUserRepository() {
         List<ActiveWebSocketUser> listActiveWebSocketUser = activeWebSocketUserRepository.getListActiveWebSocketUser();
         Assert.assertEquals(0, listActiveWebSocketUser.size());
     }

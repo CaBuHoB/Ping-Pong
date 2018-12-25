@@ -6,6 +6,6 @@ public class PingPongApplicationIntegrationTest {
 
     @Test
     public void main() {
-        PingPongApplication.main(new String[] {});
+        PingPongApplication.main(new String[]{});
     }
 }
